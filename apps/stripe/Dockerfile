@@ -15,6 +15,8 @@ COPY packages ./packages
 # Copy stripe app
 COPY apps/stripe ./apps/stripe
 
+COPY .env.docker .env
+
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
