@@ -20,7 +20,7 @@ RUN pnpm install --frozen-lockfile
 
 # Generate GraphQL types
 WORKDIR /app/apps/stripe
-RUN pnpm run generate:app
+RUN pnpm run generate:app-graphql-types
 
 # Build the app
 RUN pnpm run build
