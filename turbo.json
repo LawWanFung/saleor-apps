@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.v2.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": [".env","**/.env","**/.env.*local"],
   "globalEnv": [
     "APP_LOG_LEVEL",
     "CI",
