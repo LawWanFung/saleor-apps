@@ -22,8 +22,22 @@ RUN pnpm install --frozen-lockfile
 WORKDIR /app/apps/stripe
 RUN pnpm run generate:app-graphql-types
 
-# Build the app
-RUN pnpm run build
+# Build the app - pass env vars to suppress ESLint warnings
+RUN NODE_ENV=production \
+    NEXT_RUNTIME=nodejs \
+    OTEL_ENABLED=false \
+    APP_LOG_LEVEL=info \
+    ENV=production \
+    OTEL_ACCESS_TOKEN="" \
+    OTEL_EXPORTER_OTLP_ENDPOINT="" \
+    OTEL_SERVICE_NAME="" \
+    OTEL_LOG_LEVEL="" \
+    PORT=3000 \
+    REPOSITORY_URL="" \
+    VERCEL_ENV=production \
+    VERCEL_GIT_COMMIT_SHA="" \
+    VERCEL_URL="" \
+    pnpm run build
 
 # Runtime stage
 FROM node:22-alpine AS runner
