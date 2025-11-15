@@ -7,7 +7,7 @@ WORKDIR /app
 RUN npm install -g pnpm@10.6.3
 
 # Copy workspace config
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
 
 # Copy all packages (shared libs)
 COPY packages ./packages
@@ -21,7 +21,6 @@ COPY .env.docker ./apps/stripe/.env
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-RUN pnpm prepare
 RUN pnpm build
 
 # Generate GraphQL types
