@@ -111,5 +111,27 @@
     "vite": "catalog:",
     "vite-tsconfig-paths": "catalog:",
     "vitest": "catalog:"
+  },
+  "turbo": {
+    "env": [
+      "APP_LOG_LEVEL",
+      "CI",
+      "ENV",
+      "NODE_ENV",
+      "SENTRY_ORG",
+      "SENTRY_PROJECT",
+      "OTEL_ENABLED",
+      "OTEL_ACCESS_TOKEN",
+      "OTEL_SERVICE_NAME",
+      "OTEL_TRACES_SAMPLER",
+      "OTEL_TRACES_SAMPLER_ARG",
+      "PORT",
+      "REPOSITORY_URL",
+      "VERCEL_ENV",
+      "VERCEL_GIT_COMMIT_SHA",
+      "VERCEL_URL",
+      "NEXT_RUNTIME"
+    ]
   }
+
 }
