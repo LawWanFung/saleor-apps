@@ -53,7 +53,7 @@ COPY --from=builder /app/ /app/
 
 WORKDIR /app/apps/stripe
 
-RUN pnpm prune --prod --filter=@saleor/app-payment-stripe...
+RUN pnpm prune --prod --filter=@saleor/app-payment-stripe
 
 # Expose port
 EXPOSE 3000
