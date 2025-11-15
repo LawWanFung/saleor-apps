@@ -38,10 +38,11 @@ services:
       dynamodb-local:
         condition: service_healthy
     networks:
-      - saleor-net
+      - dokploy-network
     restart: unless-stopped
 
   dynamodb-local:
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
     image: amazon/dynamodb-local:latest
     container_name: saleor-dynamodb-local
     ports:
@@ -50,7 +51,8 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-local}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-local}
     volumes:
-      - dynamodb_data:/home/dynamodblocal/data
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
     networks:
       - saleor-net
     healthcheck:
@@ -61,8 +63,5 @@ services:
     restart: unless-stopped
 
 networks:
-  saleor-net:
-    driver: bridge
-
-volumes:
-  dynamodb_data:
+  dokploy-network:
+    external: true
