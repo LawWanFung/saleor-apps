@@ -37,8 +37,8 @@ FROM node:22-alpine AS runner
 
 WORKDIR /app
 
-# # Install pnpm again for runtime
-# RUN npm install -g pnpm@10.6.3
+# Install pnpm again for runtime
+RUN npm install -g pnpm@10.6.3
 
 # Copy necessary files from builder
 # COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
