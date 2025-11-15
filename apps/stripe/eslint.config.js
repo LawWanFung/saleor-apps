@@ -43,4 +43,17 @@ export default [
       "no-console": "off",
     },
   },
+  {
+    name: "saleor-app-payment-stripe/allow-env-usage-in-config",
+    files: [
+      "next.config.ts",
+      "playwright.config.ts",
+      "src/lib/env.ts",
+      "src/instrumentation.ts",
+      "scripts/**"
+    ],
+    rules: {
+      "turbo/no-undeclared-env-vars": "off"
+    }
+  }
 ];
