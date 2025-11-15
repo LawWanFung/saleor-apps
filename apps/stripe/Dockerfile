@@ -21,17 +21,15 @@ COPY .env.docker ./apps/stripe/.env
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-RUN pnpm build
-
 # Generate GraphQL types
 WORKDIR /app/apps/stripe
-RUN pnpm run generate:app-graphql-types
 
 # Check what's in the path
-RUN ls -la
+# RUN ls -la
 
 # Build the app - pass env vars to suppress ESLint warnings
 RUN pnpm run lint
+RUN pnpm run generate:app-graphql-types
 RUN pnpm run build
 
 # Runtime stage
@@ -48,7 +46,7 @@ COPY --from=builder /app/packages ./packages
 COPY --from=builder /app/apps/stripe ./apps/stripe
 
 # Install production dependencies only
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
 WORKDIR /app/apps/stripe
 
