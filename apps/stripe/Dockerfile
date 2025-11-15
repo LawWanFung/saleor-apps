@@ -44,12 +44,12 @@ RUN npm install -g pnpm@10.6.3
 COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
 COPY --from=builder /app/packages ./packages
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/stripe ./apps/stripe
+COPY --from=builder /app/apps/stripe .
 
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
-RUN pnpm prune --prod --filter=@saleor/app-payment-stripe...
+RUN pnpm prune --prod 
 
 # Expose port
 EXPOSE 3000
