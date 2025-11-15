@@ -28,6 +28,9 @@ RUN pnpm build
 WORKDIR /app/apps/stripe
 RUN pnpm run generate:app-graphql-types
 
+# Check what's in the path
+RUN ls -la
+
 # Build the app - pass env vars to suppress ESLint warnings
 RUN pnpm run lint
 RUN pnpm run build
