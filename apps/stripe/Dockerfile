@@ -18,6 +18,9 @@ COPY apps/stripe ./apps/stripe
 COPY .env.docker .env
 COPY .env.docker ./apps/stripe/.env
 
+RUN pnpm prepare
+RUN pnpm build
+
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
