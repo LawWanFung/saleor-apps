@@ -32,7 +32,7 @@ RUN pnpm run lint
 RUN pnpm run generate:app-graphql-types
 RUN pnpm run build
 
-RUN pnpm prune --prod --filter=saleor-app-payment-stripe
+RUN pnpm prune --prod --force --filter=saleor-app-payment-stripe
 
 # Runtime stage
 FROM node:22-alpine AS runner
