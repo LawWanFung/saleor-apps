@@ -37,21 +37,23 @@ FROM node:22-alpine AS runner
 
 WORKDIR /app
 
-# Install pnpm again for runtime
-RUN npm install -g pnpm@10.6.3
+# # Install pnpm again for runtime
+# RUN npm install -g pnpm@10.6.3
 
 # Copy necessary files from builder
-COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
-COPY --from=builder /app/packages ./packages
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/stripe ./apps/stripe
+# COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
+# COPY --from=builder /app/packages ./packages
+# COPY --from=builder /app/node_modules ./node_modules
+# COPY --from=builder /app/apps/stripe ./apps/stripe
+
+COPY --from=builder /app/ /app/
 
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
 WORKDIR /app/apps/stripe
 
-RUN pnpm build
+RUN pnpm prune --prod --filter=@saleor/app-payment-stripe...
 
 # Expose port
 EXPOSE 3000
