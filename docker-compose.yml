@@ -27,8 +27,8 @@ services:
       # DynamoDB Configuration (local)
       AWS_ENDPOINT_URL_DYNAMODB: http://saleor-dynamodb-local:8000
       AWS_REGION: ${AWS_REGION:-us-east-1}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:DUMMY_ACCESS_KEY}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:DUMMY_ACCESS_KEY}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-DUMMY_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-DUMMY_ACCESS_KEY}
       
       # Observability (Optional)
       SENTRY_DSN: ${SENTRY_DSN:-}
