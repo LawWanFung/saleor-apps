@@ -57,7 +57,7 @@ WORKDIR /apps/stripe
 # Build the app - pass env vars to suppress ESLint warnings
 # RUN pnpm --filter=@saleor/app-payment-stripe run build --filter=@saleor/app-payment-stripe
 RUN pnpm install --frozen-lockfile
-RUN pnpm run build 
+RUN pnpm --filter=@saleor/app-payment-stripe run build 
 
 # Expose port
 EXPOSE 3000
