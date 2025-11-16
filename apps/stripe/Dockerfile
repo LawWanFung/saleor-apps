@@ -51,12 +51,12 @@ WORKDIR /apps/stripe
 RUN ls -la
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN npm install --frozen-lockfile --production
 
 # Build the app - pass env vars to suppress ESLint warnings
-RUN pnpm run lint
-RUN pnpm run generate:app-graphql-types
-RUN pnpm run build
+RUN npm run lint
+RUN npm run generate:app-graphql-types
+RUN npm run build
 
 # Expose port
 EXPOSE 3000
