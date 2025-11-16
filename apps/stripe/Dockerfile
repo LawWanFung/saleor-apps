@@ -25,8 +25,9 @@ RUN pnpm install --frozen-lockfile
 # WORKDIR /app/apps/stripe
 
 # Check what's in the path
-# RUN ls -la
-
+RUN ls -la
+RUN ls -la /app/app
+RUN ls -la /app/app/apps/stripe
 
 
 # Runtime stage
