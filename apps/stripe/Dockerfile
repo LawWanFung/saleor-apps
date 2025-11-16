@@ -22,28 +22,28 @@ COPY .env.docker ./apps/stripe/.env
 RUN pnpm install --frozen-lockfile
 RUN pnpm run lint 
 # Generate GraphQL types
-# WORKDIR /app/apps/stripe
-RUN pnpm --workspace=@saleor/app-payment-stripe generate:app-graphql-types 
-RUN pnpm install --workspace=@saleor/app-payment-stripe 
-RUN pnpm --workspace=@saleor/app-payment-stripe run build 
+WORKDIR /app/apps/stripe
+RUN pnpm generate:app-graphql-types 
+RUN pnpm install
+RUN pnpm run build 
 
 # Check what's in the path
 # RUN ls -la  
 
 # Runtime stage
-FROM node:22-alpine AS runner
+# FROM node:22-alpine AS runner
 
-WORKDIR /
+# WORKDIR /
 
 # Install pnpm again for runtime
-RUN npm install -g pnpm@10.6.3
+# RUN npm install -g pnpm@10.6.3
 
 # Copy necessary files from builder
 # COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
 # COPY --from=builder /app/packages ./packages
 # COPY --from=builder /app/node_modules ./node_modules
 # COPY --from=builder /app/apps/stripe .
-COPY --from=builder /app .
+# COPY --from=builder /app .
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
