@@ -49,7 +49,7 @@ RUN ls -la
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
-WORKDIR /app/apps/stripe
+WORKDIR /app/app
 
 RUN ls -la
 
