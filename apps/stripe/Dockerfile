@@ -71,7 +71,7 @@ COPY --from=builder /app/apps/stripe/.next/standalone ./
 
 # 2. 複製 public 檔案 (靜態資源)
 # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
-COPY --from=builder /app/apps/stripe/public ./public 
+COPY --from=builder /app/apps/stripe/public ./apps/stripe/public 
 
 RUN ls -la
 
