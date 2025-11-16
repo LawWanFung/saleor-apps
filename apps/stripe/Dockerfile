@@ -50,7 +50,7 @@ RUN pnpm run build
 # WORKDIR /app/app
 
 
-WORKDIR /apps/stripe
+# WORKDIR /apps/stripe
 # RUN ls -la
 
 # Install dependencies
