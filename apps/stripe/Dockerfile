@@ -73,6 +73,8 @@ COPY --from=builder /app/apps/stripe/.next/standalone ./
 # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 COPY --from=builder /app/apps/stripe/public ./public 
 
+RUN ls -la
+
 # Set environment
 ENV NODE_ENV=production
 ENV PORT=3001
