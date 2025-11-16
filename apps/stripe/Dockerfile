@@ -22,7 +22,7 @@ COPY .env.docker ./apps/stripe/.env
 RUN pnpm install --frozen-lockfile
 RUN pnpm run lint 
 # Generate GraphQL types
-WORKDIR /app/apps/stripe
+# WORKDIR /app/apps/stripe
 RUN pnpm --workspace=@saleor/app-payment-stripe generate:app-graphql-types 
 RUN pnpm install --workspace=@saleor/app-payment-stripe 
 RUN pnpm --workspace=@saleor/app-payment-stripe run build 
