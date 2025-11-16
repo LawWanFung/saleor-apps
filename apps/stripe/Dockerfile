@@ -13,7 +13,6 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
 COPY packages ./packages
 
 # Copy stripe app
-COPY apps/stripe .
 
 COPY .env.docker .env
 # Install dependencies
@@ -22,6 +21,7 @@ RUN pnpm run lint
 # Generate GraphQL types
 RUN pnpm generate:app-graphql-types 
 # RUN pnpm install
+COPY apps/stripe .
 RUN pnpm run build 
 
 # Check what's in the path
