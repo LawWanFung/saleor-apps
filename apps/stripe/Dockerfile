@@ -19,7 +19,7 @@ COPY .env.docker .env
 COPY .env.docker ./apps/stripe/.env
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --production 
 
 # Generate GraphQL types
 # WORKDIR /app/apps/stripe
@@ -47,16 +47,16 @@ COPY --from=builder /app .
 # WORKDIR /app/app
 
 
-WORKDIR /apps/stripe
-RUN ls -la
+# WORKDIR /apps/stripe
+# RUN ls -la
 
 # Install dependencies
-RUN npm install --frozen-lockfile
+# RUN npm install --frozen-lockfile --production
 
 # Build the app - pass env vars to suppress ESLint warnings
 RUN npm run lint
 RUN npm run generate:app-graphql-types
-RUN npm run build
+RUN npm run build --filter=@saleor/app-payment-stripe
 
 # Expose port
 EXPOSE 3000
