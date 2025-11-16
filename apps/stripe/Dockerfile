@@ -50,7 +50,8 @@ RUN ls -la
 
 WORKDIR /app/app/apps/stripe
 
-RUN npm run build
+# Install dependencies
+RUN pnpm install --frozen-lockfile
 
 # Build the app - pass env vars to suppress ESLint warnings
 RUN pnpm run lint
