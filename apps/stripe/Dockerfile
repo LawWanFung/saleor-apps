@@ -43,9 +43,6 @@ RUN npm install -g pnpm@10.6.3
 # COPY --from=builder /app/node_modules ./node_modules
 # COPY --from=builder /app/apps/stripe .
 COPY --from=builder . .
-
-RUN ls -la 
-
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
@@ -53,7 +50,9 @@ WORKDIR /app/app
 
 RUN ls -la
 
-RUN pnpm install --prod --frozen-lockfile
+WORKDIR /app/app/apps/stripe
+
+RUN npm run build
 
 # Build the app - pass env vars to suppress ESLint warnings
 RUN pnpm run lint
