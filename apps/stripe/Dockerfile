@@ -1,7 +1,7 @@
 # Build stage
 FROM node:22-alpine AS builder
 
-WORKDIR /
+WORKDIR /app
 
 # Install pnpm
 RUN npm install -g pnpm@10.6.3
@@ -40,7 +40,7 @@ RUN npm install -g pnpm@10.6.3
 # COPY --from=builder /app/packages ./packages
 # COPY --from=builder /app/node_modules ./node_modules
 # COPY --from=builder /app/apps/stripe .
-COPY --from=builder . .
+COPY --from=builder /app .
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
