@@ -58,27 +58,26 @@ FROM node:22-alpine AS runner
 # RUN pnpm prune --prod
 
 # ===============================================
-# 🚀 Standalone 優化：不再複製 package.json, pnpm-lock, node_modules
-# 也不再執行 pnpm prune
+# 🚀 Standalone 最終優化 (Monorepo-Safe Launch)
+# 將工作目錄設定為應用程式根目錄，確保 server.js 能找到所有相對路徑的構建資源
 # ===============================================
-WORKDIR /app
 
-# 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和所有 Node 依賴)
-# 路徑結構：/app/apps/stripe/.next/standalone -> 容器的 /app/
+# 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
+WORKDIR /app/apps/stripe
+
+# 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
+# 🎯 關鍵: 複製到 /app/apps/stripe/
 COPY --from=builder /app/apps/stripe/.next/standalone ./
 
 # 2. 複製 public 檔案 (靜態資源)
-# 路徑結構：/app/apps/stripe/public -> 容器的 /app/public
+# 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 COPY --from=builder /app/apps/stripe/public ./public 
 
 # Set environment
 ENV NODE_ENV=production
-# 💡 修正 1: 設定 PORT 為 3001，強制 Next.js 服務器在這個端口運行
 ENV PORT=3001
-# 💡 修正 2: 設定 HOSTNAME 讓服務器綁定到所有接口 (0.0.0.0)，以便 Docker 映射存取
 ENV HOSTNAME=0.0.0.0
 
-# Expose port
 EXPOSE 3001
 
 # Health check
