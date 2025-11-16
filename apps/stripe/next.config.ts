@@ -3,6 +3,7 @@ import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  output: "standalone",
   transpilePackages: [
     "@saleor/apps-logger",
     "@saleor/apps-otel",
@@ -31,5 +32,4 @@ export default withSentryConfig(nextConfig, {
   disableLogger: true,
   widenClientFileUpload: true,
   tunnelRoute: "/monitoring",
-  output: "standalone",
 });
