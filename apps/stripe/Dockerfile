@@ -18,10 +18,10 @@ COPY .env.docker .env
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 RUN pnpm run lint 
+COPY apps/stripe .
 # Generate GraphQL types
 RUN pnpm generate:app-graphql-types 
 # RUN pnpm install
-COPY apps/stripe .
 RUN pnpm run build 
 
 # Check what's in the path
