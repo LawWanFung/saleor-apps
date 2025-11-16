@@ -23,7 +23,9 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm run lint 
 # Generate GraphQL types
 WORKDIR /app/apps/stripe
-RUN pnpm run generate:app-graphql-types 
+RUN pnpm --workspace=@saleor/app-payment-stripe run generate:app-graphql-types 
+RUN pnpm --workspace=@saleor/app-payment-stripe install 
+RUN pnpm --workspace=@saleor/app-payment-stripe run build 
 
 # Check what's in the path
 # RUN ls -la  
@@ -56,8 +58,6 @@ WORKDIR /apps/stripe
 
 # Build the app - pass env vars to suppress ESLint warnings
 # RUN pnpm --filter=@saleor/app-payment-stripe run build --filter=@saleor/app-payment-stripe
-RUN pnpm --workspace=@saleor/app-payment-stripe install 
-RUN pnpm --workspace=@saleor/app-payment-stripe run build 
 
 # Expose port
 EXPOSE 3000
