@@ -46,9 +46,9 @@ COPY --from=builder . .
 
 # WORKDIR /app/app
 
-RUN ls -la
 
 WORKDIR /apps/stripe
+RUN ls -la
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
