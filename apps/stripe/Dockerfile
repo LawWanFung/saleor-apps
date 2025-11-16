@@ -53,9 +53,9 @@ COPY --from=builder /app .
 # RUN npm install --frozen-lockfile --production
 
 # Build the app - pass env vars to suppress ESLint warnings
-RUN npm run lint
-RUN npm run generate:app-graphql-types
-RUN npm run build --filter=@saleor/app-payment-stripe
+RUN pnpm run lint
+RUN pnpm run generate:app-graphql-types
+RUN pnpm run build --filter=@saleor/app-payment-stripe
 
 # Expose port
 EXPOSE 3000
