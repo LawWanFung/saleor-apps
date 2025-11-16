@@ -24,7 +24,7 @@ RUN pnpm run lint
 # Generate GraphQL types
 WORKDIR /app/apps/stripe
 RUN pnpm generate:app-graphql-types 
-RUN pnpm install
+# RUN pnpm install
 RUN pnpm run build 
 
 # Check what's in the path
@@ -33,37 +33,28 @@ RUN pnpm run build
 # Runtime stage
 FROM node:22-alpine AS runner
 
-# WORKDIR /
+# Set environment for the app
+ENV NODE_ENV=production
 
-# Install pnpm again for runtime
-# RUN npm install -g pnpm@10.6.3
+# Set the working directory
+WORKDIR /app
 
-# Copy necessary files from builder
-# COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
-# COPY --from=builder /app/packages ./packages
-# COPY --from=builder /app/node_modules ./node_modules
-# COPY --from=builder /app/apps/stripe .
-# COPY --from=builder /app .
-# Install production dependencies only
-#RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
+# 1. 複製核心 Next.js 運行環境所需的文件和 pnpm
+# Next.js Server / Build output
+COPY --from=builder /app/apps/stripe/.next ./.next
+COPY --from=builder /app/apps/stripe/public ./public 
 
-# WORKDIR /app/app
+# 2. 複製依賴 (只需要生產環境的依賴)
+# 透過 pnpm prune，只保留生產環境所需依賴
+RUN npm install -g pnpm@10.6.3 # 在 runner 階段安裝 pnpm
+COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder /app/node_modules ./node_modules
+# 複製 Apps 和 Packages (如果它們有額外的運行時依賴或邏輯)
+COPY --from=builder /app/packages ./packages
+COPY --from=builder /app/apps/stripe ./apps/stripe
 
-
-# WORKDIR /apps/stripe
-# RUN ls -la
-
-# Install dependencies
-# RUN npm install --frozen-lockfile --production
-
-# Build the app - pass env vars to suppress ESLint warnings
-# RUN pnpm --filter=@saleor/app-payment-stripe run build --filter=@saleor/app-payment-stripe
-
-# *** 確保這兩行存在並複製了必要的檔案 ***
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-
-RUN ls -la
+# 3. (可選，但建議) 刪除開發依賴
+RUN pnpm prune --prod
 
 # Expose port
 EXPOSE 3001
