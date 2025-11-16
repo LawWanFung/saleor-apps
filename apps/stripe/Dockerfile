@@ -22,7 +22,7 @@ COPY .env.docker ./apps/stripe/.env
 RUN pnpm install --frozen-lockfile
 
 # Generate GraphQL types
-WORKDIR /app/apps/stripe
+# WORKDIR /app/apps/stripe
 
 # Check what's in the path
 # RUN ls -la
@@ -38,15 +38,19 @@ WORKDIR /app
 RUN npm install -g pnpm@10.6.3
 
 # Copy necessary files from builder
-COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
-COPY --from=builder /app/packages ./packages
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/apps/stripe .
+# COPY --from=builder /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/package.json ./
+# COPY --from=builder /app/packages ./packages
+# COPY --from=builder /app/node_modules ./node_modules
+# COPY --from=builder /app/apps/stripe .
+COPY --from=builder . .
+
 
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
 WORKDIR /app/apps/stripe
+
+RUN pnpm install --prod --frozen-lockfile
 
 # Build the app - pass env vars to suppress ESLint warnings
 RUN pnpm run lint
