@@ -55,7 +55,8 @@ WORKDIR /apps/stripe
 # RUN npm install --frozen-lockfile --production
 
 # Build the app - pass env vars to suppress ESLint warnings
-RUN pnpm --filter=@saleor/app-payment-stripe run build --filter=@saleor/app-payment-stripe
+# RUN pnpm --filter=@saleor/app-payment-stripe run build --filter=@saleor/app-payment-stripe
+RUN pnpm run build
 
 # Expose port
 EXPOSE 3000
