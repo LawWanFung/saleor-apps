@@ -1,7 +1,7 @@
 # Build stage
 FROM node:22-alpine AS builder
 
-WORKDIR /app
+WORKDIR /
 
 # Install pnpm
 RUN npm install -g pnpm@10.6.3
@@ -30,7 +30,7 @@ RUN pnpm install --frozen-lockfile
 # Runtime stage
 FROM node:22-alpine AS runner
 
-WORKDIR /app
+WORKDIR /
 
 # Install pnpm again for runtime
 RUN npm install -g pnpm@10.6.3
@@ -48,7 +48,7 @@ COPY --from=builder . .
 
 RUN ls -la
 
-WORKDIR /app/app/apps/stripe
+WORKDIR /apps/stripe
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
