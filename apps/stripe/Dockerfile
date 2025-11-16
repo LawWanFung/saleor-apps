@@ -51,6 +51,8 @@ RUN ls -la
 
 WORKDIR /app/apps/stripe
 
+RUN ls -la
+
 RUN pnpm install --prod --frozen-lockfile
 
 # Build the app - pass env vars to suppress ESLint warnings
