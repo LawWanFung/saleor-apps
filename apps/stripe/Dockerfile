@@ -25,10 +25,7 @@ RUN pnpm install --frozen-lockfile
 # WORKDIR /app/apps/stripe
 
 # Check what's in the path
-RUN ls -la
-RUN ls -la /app/app
-RUN ls -la /app/app/apps/stripe
-
+# RUN ls -la  
 
 # Runtime stage
 FROM node:22-alpine AS runner
@@ -47,7 +44,7 @@ COPY --from=builder . .
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
-WORKDIR /app/app
+# WORKDIR /app/app
 
 RUN ls -la
 
