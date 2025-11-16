@@ -86,4 +86,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 
 # Start the app
 # CMD ["pnpm", "start", "-p", "3001"]
-CMD ["node", "apps/stripe/server.js", "-p", "3001"]
+CMD ["node", "./apps/stripe/server.js", "-p", "3001"]
