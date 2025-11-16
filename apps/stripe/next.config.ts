@@ -31,4 +31,5 @@ export default withSentryConfig(nextConfig, {
   disableLogger: true,
   widenClientFileUpload: true,
   tunnelRoute: "/monitoring",
+  output: "standalone",
 });

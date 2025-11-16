@@ -48,6 +48,7 @@ COPY --from=builder /app/apps/stripe/public ./public
 # 透過 pnpm prune，只保留生產環境所需依賴
 RUN npm install -g pnpm@10.6.3 # 在 runner 階段安裝 pnpm
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
 # 複製 Apps 和 Packages (如果它們有額外的運行時依賴或邏輯)
 COPY --from=builder /app/packages ./packages
@@ -64,4 +65,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD node -e "require('http').get('http://localhost:3001/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Start the app
-CMD ["pnpm", "start", "-p", "3001"]
+# CMD ["pnpm", "start", "-p", "3001"]
+CMD ["node", "apps/stripe/server.js", "-p", "3001"]
