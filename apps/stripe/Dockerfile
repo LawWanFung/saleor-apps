@@ -24,7 +24,7 @@ RUN pnpm run lint
 # Generate GraphQL types
 WORKDIR /app/apps/stripe
 RUN pnpm --workspace=@saleor/app-payment-stripe run generate:app-graphql-types 
-RUN pnpm --workspace=@saleor/app-payment-stripe install 
+RUN pnpm install --workspace=@saleor/app-payment-stripe 
 RUN pnpm --workspace=@saleor/app-payment-stripe run build 
 
 # Check what's in the path
