@@ -44,6 +44,7 @@ RUN npm install -g pnpm@10.6.3
 # COPY --from=builder /app/apps/stripe .
 COPY --from=builder . .
 
+RUN ls -la 
 
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
