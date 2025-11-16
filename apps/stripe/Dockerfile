@@ -19,8 +19,7 @@ COPY .env.docker .env
 COPY .env.docker ./apps/stripe/.env
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile --production 
-
+RUN pnpm install --frozen-lockfile
 # Generate GraphQL types
 # WORKDIR /app/apps/stripe
 
