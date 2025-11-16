@@ -73,6 +73,10 @@ COPY --from=builder /app/apps/stripe/public ./public
 
 # Set environment
 ENV NODE_ENV=production
+# 💡 修正 1: 設定 PORT 為 3001，強制 Next.js 服務器在這個端口運行
+ENV PORT=3001
+# 💡 修正 2: 設定 HOSTNAME 讓服務器綁定到所有接口 (0.0.0.0)，以便 Docker 映射存取
+ENV HOSTNAME=0.0.0.0
 
 # Expose port
 EXPOSE 3001
