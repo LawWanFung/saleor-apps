@@ -50,7 +50,8 @@ COPY --from=builder /app/apps/stripe .
 # Install production dependencies only
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
-# RUN pnpm prune --prod
+WORKDIR /app/apps/stripe
+RUN npm build
 
 # Expose port
 EXPOSE 3000
