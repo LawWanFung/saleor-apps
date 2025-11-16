@@ -27,10 +27,6 @@ WORKDIR /app/apps/stripe
 # Check what's in the path
 # RUN ls -la
 
-# Build the app - pass env vars to suppress ESLint warnings
-RUN pnpm run lint
-RUN pnpm run generate:app-graphql-types
-RUN pnpm run build
 
 
 # Runtime stage
@@ -51,7 +47,11 @@ COPY --from=builder /app/apps/stripe .
 #RUN pnpm --filter=saleor-app-payment-stripe install --prod --frozen-lockfile
 
 WORKDIR /app/apps/stripe
-RUN npm build
+
+# Build the app - pass env vars to suppress ESLint warnings
+RUN pnpm run lint
+RUN pnpm run generate:app-graphql-types
+RUN pnpm run build
 
 # Expose port
 EXPOSE 3000
