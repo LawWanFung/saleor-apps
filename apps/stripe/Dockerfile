@@ -31,7 +31,7 @@ RUN pnpm run build
 # RUN ls -la  
 
 # Runtime stage
-# FROM node:22-alpine AS runner
+FROM node:22-alpine AS runner
 
 # WORKDIR /
 
@@ -58,6 +58,12 @@ RUN pnpm run build
 
 # Build the app - pass env vars to suppress ESLint warnings
 # RUN pnpm --filter=@saleor/app-payment-stripe run build --filter=@saleor/app-payment-stripe
+
+# *** 確保這兩行存在並複製了必要的檔案 ***
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+RUN ls -la
 
 # Expose port
 EXPOSE 3001
