@@ -15,7 +15,7 @@ RUN ls -la ./out/full
 
 # 1. Build stage
 FROM node:22-alpine AS builder
- 
+
 WORKDIR /app
 
 # Install pnpm
@@ -39,17 +39,17 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 # # Copy stripe app
 # COPY apps/stripe ./apps/stripe
 
-# COPY .env.docker .env
-# COPY .env.docker ./apps/stripe/.env
+COPY .env.docker .env
+COPY .env.docker ./apps/stripe/.env
 
 # Install dependencies
 RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile
 RUN pnpm --filter saleor-app-payment-stripe... run lint 
 # Generate GraphQL types
 WORKDIR /app/apps/stripe
-RUN pnpm generate:app-graphql-types 
+RUN pnpm --filter saleor-app-payment-stripe... generate:app-graphql-types 
 # RUN pnpm install
-RUN pnpm run build 
+RUN pnpm --filter saleor-app-payment-stripe... run build 
 
 # Check what's in the path
 # RUN ls -la  
