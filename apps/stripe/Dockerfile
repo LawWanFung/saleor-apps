@@ -40,14 +40,14 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 # COPY apps/stripe ./apps/stripe
 
 COPY .env.docker .env
-COPY .env.docker ./app/builder/apps/stripe/.env
+COPY .env.docker ./apps/stripe/.env
 
 
 # Install dependencies
 RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile
 RUN pnpm --filter saleor-app-payment-stripe... run lint 
 # Generate GraphQL types
-WORKDIR /apps/stripe
+WORKDIR /apps/builder/stripe
 
 
 # RUN ls /app/apps/
