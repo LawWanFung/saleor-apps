@@ -109,11 +109,11 @@ RUN ls -la
 # # COPY --from=builder public ./apps/stripe/public 
 # COPY --from=builder /app/apps/stripe/public ./public 
 
-RUN ls -la ./apps
-RUN ls -la ./apps/stripe
-RUN ls -la ./apps/stripe/.next
+# RUN ls -la ./apps
+# RUN ls -la ./apps/stripe
+# RUN ls -la ./apps/stripe/.next
 
-RUN find . -type d -name "static"
+# RUN find . -type d -name "static"
 
 # Set environment
 ENV NODE_ENV=production
