@@ -39,7 +39,7 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 COPY .env.docker .env
 COPY .env.docker ./apps/stripe/.env
 
-RUN pnpm rc shared-workspace-lockfile=true
+ENV PNPM_SHARED_WORKSPACE_LOCKFILE=true
 RUN pnpm fetch --filter saleor-app-payment-stripe... --filter @saleor/* 
 
 RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --offline --frozen-lockfile
