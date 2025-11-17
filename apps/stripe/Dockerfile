@@ -55,6 +55,7 @@ RUN pnpm --filter saleor-app-payment-stripe... generate
 
 RUN pnpm store prune
 
+ENV HUSKY=0
 RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile --prod --force
 # RUN pwd
 # RUN ls -la
