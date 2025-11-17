@@ -9,7 +9,7 @@ COPY apps/stripe ./apps/stripe
 
 RUN pnpm dlx turbo@2.6.1 prune saleor-app-payment-stripe --docker --out-dir out
 
-RUN ls -la
+RUN ls -la ./out
 
 # 1. Build stage
 FROM node:22-alpine AS builder
