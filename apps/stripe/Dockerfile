@@ -5,6 +5,7 @@ WORKDIR /app
 RUN npm install -g pnpm@10.6.3 turbo@2.6.1
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
 COPY packages ./packages
+COPY .husky ./.husky
 COPY apps/stripe ./apps/stripe
 
 RUN pnpm dlx turbo@2.6.1 prune saleor-app-payment-stripe --docker --out-dir out
@@ -22,6 +23,7 @@ RUN npm install -g pnpm@10.6.3
 COPY --from=pruner /app/out/pnpm-lock.yaml pnpm-lock.yaml
 COPY --from=pruner /app/out/pnpm-workspace.yaml pnpm-workspace.yaml
 COPY --from=pruner /app/out/full/package.json package.json
+COPY --from=pruner /app/out/full/.husky .husky
 COPY --from=pruner /app/out/full/apps ./apps
 COPY --from=pruner /app/out/full/packages ./packages
 COPY --from=pruner /app/out/full/turbo.json turbo.json 
@@ -55,7 +57,6 @@ RUN pnpm --filter saleor-app-payment-stripe... generate
 
 RUN pnpm store prune
 
-ENV HUSKY=0
 RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile --prod --force
 # RUN pwd
 # RUN ls -la
