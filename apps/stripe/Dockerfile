@@ -101,6 +101,8 @@ RUN ls -la ./apps
 RUN ls -la ./apps/stripe
 RUN ls -la ./apps/stripe/.next
 
+RUN find . -type d -name "static"
+
 # Set environment
 ENV NODE_ENV=production
 ENV PORT=3001
