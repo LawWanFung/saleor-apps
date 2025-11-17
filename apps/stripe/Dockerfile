@@ -65,6 +65,10 @@ FROM node:22-alpine AS runner
 # 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
 WORKDIR /app
 
+# This is needed so pnpm-store volume is created with correct permissions (see docker-compose.yml)
+RUN mkdir -p /app/.pnpm-store
+RUN chown -R node:node /app/.pnpm-store
+
 # 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
 # 🎯 關鍵: 複製到 /app/apps/stripe/
 COPY --from=builder /app/apps/stripe/.next/standalone ./
