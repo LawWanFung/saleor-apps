@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   stripe-app:
+    image: stripe
     command: sleep infinity # keeps docker container running
     build:
       context: .
-      dockerfile: .devcontainer/stripe/Dockerfile
+      dockerfile: apps/stripe/Dockerfile
     container_name: saleor-stripe-app
     ports:
       - "3001:3001"
