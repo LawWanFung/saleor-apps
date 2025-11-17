@@ -48,13 +48,16 @@ RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --froz
 RUN pnpm --filter saleor-app-payment-stripe... run lint 
 # Generate GraphQL types
 # WORKDIR /app/apps/stripe
-# RUN ls -la
+
 
 # RUN ls /app/apps/
 # RUN ls /app/apps/stripe/
 
 
 RUN pnpm --filter saleor-app-payment-stripe... generate:app-graphql-types 
+
+RUN pwd
+RUN ls -la
 # RUN pnpm install
 RUN pnpm --filter saleor-app-payment-stripe... run build 
 
