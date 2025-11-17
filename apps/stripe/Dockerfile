@@ -97,7 +97,9 @@ COPY --from=builder /app/apps/stripe/.next/static ./apps/stripe/.next/static
 # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 COPY --from=builder /app/apps/stripe/public ./apps/stripe/public 
 
-RUN ls -la
+RUN ls -la ./apps
+RUN ls -la ./apps/stripe
+RUN ls -la ./apps/stripe/.next
 
 # Set environment
 ENV NODE_ENV=production
