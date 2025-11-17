@@ -9,10 +9,6 @@ COPY apps/stripe ./apps/stripe
 
 RUN pnpm dlx turbo@2.6.1 prune saleor-app-payment-stripe --docker --out-dir out
 
-RUN ls -la
-RUN ls -la ./out
-RUN ls -la ./out/full
-
 # 1. Build stage
 FROM node:22-alpine AS builder
 
@@ -20,6 +16,7 @@ WORKDIR /app/builder
 
 # Install pnpm
 RUN npm install -g pnpm@10.6.3
+
 
 # 用 pruner 嘅 output 做 context
 COPY --from=pruner /app/out/pnpm-lock.yaml pnpm-lock.yaml
@@ -42,20 +39,23 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 COPY .env.docker .env
 COPY .env.docker ./apps/stripe/.env
 
+RUN pnpm rc shared-workspace-lockfile=true
+RUN pnpm fetch --filter saleor-app-payment-stripe... --filter @saleor/* 
+
+RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --offline --frozen-lockfile
 
 # Install dependencies
-RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile
 RUN pnpm --filter saleor-app-payment-stripe... run lint 
 # Generate GraphQL types
-WORKDIR /app/builder/apps/stripe
-
+# WORKDIR /app/builder/apps/stripe
 
 # RUN ls /app/apps/
 # RUN ls /app/apps/stripe/
+RUN pnpm --filter saleor-app-payment-stripe... generate
 
+RUN pnpm store prune
 
-RUN pnpm --filter saleor-app-payment-stripe... generate:app-graphql-types 
-
+RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile --prod --force
 # RUN pwd
 # RUN ls -la
 # RUN pnpm install
@@ -67,7 +67,7 @@ RUN pnpm --filter saleor-app-payment-stripe... run build
 FROM node:22-alpine AS runner
 
 # 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
-WORKDIR /app
+WORKDIR /app/apps/stripe
 
 
 # # Set environment for the app
@@ -102,12 +102,12 @@ WORKDIR /app
 
 # # 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
 # # 🎯 關鍵: 複製到 /app/apps/stripe/
-COPY --from=builder /app/builder/apps/stripe/.next/standalone ./
-COPY --from=builder /app/builder/apps/stripe/.next/static ./static
+COPY --from=builder /app/apps/stripe/.next/standalone ./
+COPY --from=builder /app/apps/stripe/.next/static ./static
 # # 2. 複製 public 檔案 (靜態資源)
 # # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 # # COPY --from=builder public ./apps/stripe/public 
-COPY --from=builder /app/builder/apps/stripe/public ./public 
+COPY --from=builder /app/apps/stripe/public ./public 
 
 # RUN ls -la ./apps
 # RUN ls -la ./apps/stripe
