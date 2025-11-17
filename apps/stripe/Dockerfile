@@ -69,7 +69,7 @@ RUN pnpm --filter saleor-app-payment-stripe... run build
 FROM node:22-alpine AS runner
 
 # 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
-WORKDIR /app/apps/stripe
+WORKDIR /app
 
 
 # # Set environment for the app
@@ -105,11 +105,11 @@ WORKDIR /app/apps/stripe
 # # 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
 # # 🎯 關鍵: 複製到 /app/apps/stripe/
 COPY --from=builder /app/builder/apps/stripe/.next/standalone ./
-COPY --from=builder /app/builder/apps/stripe/.next/static ./static
+COPY --from=builder /app/builder/apps/stripe/.next/static ./apps/stripe/.next/static
 # # 2. 複製 public 檔案 (靜態資源)
 # # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 # # COPY --from=builder public ./apps/stripe/public 
-COPY --from=builder /app/builder/apps/stripe/public ./public 
+COPY --from=builder /app/builder/apps/stripe/public ./apps/stripe/public
 
 # RUN ls -la ./apps
 # RUN ls -la ./apps/stripe
@@ -130,7 +130,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 
 # Start the app
 # CMD ["pnpm", "start", "-p", "3001"]
-CMD ["node", "/app/apps/stripe/server.js", "-p", "3001"]
+CMD ["node", "/app/stripe/server.js", "-p", "3001"]
 
 
 
