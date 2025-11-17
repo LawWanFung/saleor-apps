@@ -55,9 +55,9 @@ RUN pnpm --filter saleor-app-payment-stripe... run lint
 # RUN ls /app/apps/stripe/
 RUN pnpm --filter saleor-app-payment-stripe... generate
 
-RUN pnpm store prune
+# RUN pnpm store prune
 
-RUN HUSKY=0 pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile --prod --force
+# RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile --prod --force
 # RUN pwd
 # RUN ls -la
 # RUN pnpm install
