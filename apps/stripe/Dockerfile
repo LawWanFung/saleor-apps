@@ -66,6 +66,10 @@ RUN pnpm --filter saleor-app-payment-stripe... run build
 # Runtime stage
 FROM node:22-alpine AS runner
 
+# 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
+WORKDIR /app/builder
+
+RUN ls -la
 # # Set environment for the app
 # ENV NODE_ENV=production
 
@@ -95,19 +99,15 @@ FROM node:22-alpine AS runner
 # 將工作目錄設定為應用程式根目錄，確保 server.js 能找到所有相對路徑的構建資源
 # ===============================================
 
-# 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
-WORKDIR /app/builder
-
-RUN ls -la
 
 # 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
 # 🎯 關鍵: 複製到 /app/apps/stripe/
-COPY --from=builder /apps/stripe/.next/standalone ./
-COPY --from=builder /apps/stripe/.next/static ./
+COPY --from=builder /app/apps/stripe/.next/standalone ./
+COPY --from=builder /app/apps/stripe/.next/static ./
 # 2. 複製 public 檔案 (靜態資源)
 # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 # COPY --from=builder public ./apps/stripe/public 
-COPY --from=builder /apps/stripe/public ./public 
+COPY --from=builder /app/apps/stripe/public ./public 
 
 RUN ls -la ./apps
 RUN ls -la ./apps/stripe
@@ -128,4 +128,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 
 # Start the app
 # CMD ["pnpm", "start", "-p", "3001"]
-CMD ["node", "apps/stripe/server.js", "-p", "3001"]
+CMD ["node", "/app/apps/stripe/server.js", "-p", "3001"]
