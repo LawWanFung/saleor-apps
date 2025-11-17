@@ -1,4 +1,15 @@
-# Build stage
+# 0. Pruner stage
+FROM node:22-alpine AS pruner
+WORKDIR /app
+
+RUN npm install -g pnpm@10.6.3 turbo@2.6.1
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
+COPY packages ./packages
+COPY apps/stripe ./apps/stripe
+
+RUN pnpm dlx turbo@2.6.1 prune saleor-app-stripe --docker --out-dir out
+
+# 1. Build stage
 FROM node:22-alpine AS builder
  
 WORKDIR /app
@@ -6,21 +17,28 @@ WORKDIR /app
 # Install pnpm
 RUN npm install -g pnpm@10.6.3
 
-# Copy workspace config
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
+# 用 pruner 嘅 output 做 context
+COPY --from=pruner /app/out/pnpm-lock.yaml pnpm-lock.yaml
+COPY --from=pruner /app/out/pnpm-workspace.yaml pnpm-workspace.yaml
+COPY --from=pruner /app/out/package.json package.json
+COPY --from=pruner /app/out/apps ./apps
+COPY --from=pruner /app/out/packages ./packages
 
-# Copy all packages (shared libs)
-COPY packages ./packages
+# # Copy workspace config
+# COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
 
-# Copy stripe app
-COPY apps/stripe ./apps/stripe
+# # Copy all packages (shared libs)
+# COPY packages ./packages
 
-COPY .env.docker .env
-COPY .env.docker ./apps/stripe/.env
+# # Copy stripe app
+# COPY apps/stripe ./apps/stripe
+
+# COPY .env.docker .env
+# COPY .env.docker ./apps/stripe/.env
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
-RUN pnpm run lint 
+RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile
+RUN pnpm --filter saleor-app-payment-stripe... run lint 
 # Generate GraphQL types
 WORKDIR /app/apps/stripe
 RUN pnpm generate:app-graphql-types 
@@ -65,19 +83,13 @@ FROM node:22-alpine AS runner
 # 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
 WORKDIR /app
 
-# This is needed so pnpm-store volume is created with correct permissions (see docker-compose.yml)
-RUN mkdir -p /app/.pnpm-store
-RUN chown -R node:node /app/.pnpm-store
-
 # 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
 # 🎯 關鍵: 複製到 /app/apps/stripe/
 COPY --from=builder /app/apps/stripe/.next/standalone ./
-
+COPY --from=builder /app/apps/stripe/.next/static ./apps/stripe/.next/static
 # 2. 複製 public 檔案 (靜態資源)
 # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 COPY --from=builder /app/apps/stripe/public ./apps/stripe/public 
-
-RUN ls -la
 
 # Set environment
 ENV NODE_ENV=production
