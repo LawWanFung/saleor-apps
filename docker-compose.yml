@@ -36,7 +36,7 @@ services:
       SENTRY_DSN: ${SENTRY_DSN:-}
       OTEL_ENABLED: ${OTEL_ENABLED:-false}
     volumes:
-      - "../..:/app"
+      # - "../..:/app"
       - "pnpm-store:/app/.pnpm-store"
     depends_on:
       dynamodb-local:
