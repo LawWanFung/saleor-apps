@@ -67,7 +67,7 @@ RUN pnpm --filter saleor-app-payment-stripe... run build
 FROM node:22-alpine AS runner
 
 # 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
-WORKDIR /app/builder
+WORKDIR /app
 
 RUN ls -la
 # # Set environment for the app
