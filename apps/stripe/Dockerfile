@@ -40,7 +40,7 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 # COPY apps/stripe ./apps/stripe
 
 COPY .env.docker .env
-# COPY .env.docker ./apps/stripe/.env
+COPY .env.docker ./app/builder/apps/stripe/.env
 
 
 # Install dependencies
@@ -60,7 +60,6 @@ RUN pwd
 RUN ls -la
 # RUN pnpm install
 RUN pnpm --filter saleor-app-payment-stripe... run build 
-
 # Check what's in the path
 RUN ls -la  
 
