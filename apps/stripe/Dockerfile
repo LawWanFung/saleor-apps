@@ -47,7 +47,7 @@ COPY .env.docker ./app/builder/apps/stripe/.env
 RUN pnpm install --filter saleor-app-payment-stripe... --filter @saleor/* --frozen-lockfile
 RUN pnpm --filter saleor-app-payment-stripe... run lint 
 # Generate GraphQL types
-# WORKDIR /app/apps/stripe
+WORKDIR /apps/stripe
 
 
 # RUN ls /app/apps/
