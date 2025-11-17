@@ -100,14 +100,14 @@ RUN ls -la
 # ===============================================
 
 
-# 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
-# 🎯 關鍵: 複製到 /app/apps/stripe/
-COPY --from=builder /app/apps/stripe/.next/standalone ./
-COPY --from=builder /app/apps/stripe/.next/static ./
-# 2. 複製 public 檔案 (靜態資源)
-# 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
-# COPY --from=builder public ./apps/stripe/public 
-COPY --from=builder /app/apps/stripe/public ./public 
+# # 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
+# # 🎯 關鍵: 複製到 /app/apps/stripe/
+# COPY --from=builder /app/apps/stripe/.next/standalone ./
+# COPY --from=builder /app/apps/stripe/.next/static ./
+# # 2. 複製 public 檔案 (靜態資源)
+# # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
+# # COPY --from=builder public ./apps/stripe/public 
+# COPY --from=builder /app/apps/stripe/public ./public 
 
 RUN ls -la ./apps
 RUN ls -la ./apps/stripe
