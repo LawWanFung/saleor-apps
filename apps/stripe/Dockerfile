@@ -7,7 +7,7 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
 COPY packages ./packages
 COPY apps/stripe ./apps/stripe
 
-RUN pnpm dlx turbo@2.6.1 prune saleor-app-stripe --docker --out-dir out
+RUN pnpm dlx turbo@2.6.1 prune saleor-app-payment-stripe --docker --out-dir out
 
 # 1. Build stage
 FROM node:22-alpine AS builder
