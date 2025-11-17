@@ -23,7 +23,6 @@ RUN npm install -g pnpm@10.6.3
 COPY --from=pruner /app/out/pnpm-lock.yaml pnpm-lock.yaml
 COPY --from=pruner /app/out/pnpm-workspace.yaml pnpm-workspace.yaml
 COPY --from=pruner /app/out/full/package.json package.json
-COPY --from=pruner /app/out/full/.husky .husky
 COPY --from=pruner /app/out/full/apps ./apps
 COPY --from=pruner /app/out/full/packages ./packages
 COPY --from=pruner /app/out/full/turbo.json turbo.json 
@@ -40,6 +39,7 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 
 COPY .env.docker .env
 COPY .env.docker ./apps/stripe/.env
+COPY .husky ./.husky
 
 ENV PNPM_SHARED_WORKSPACE_LOCKFILE=true
 RUN pnpm fetch --filter saleor-app-payment-stripe... --filter @saleor/* 
