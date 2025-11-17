@@ -49,6 +49,8 @@ services:
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
     image: amazon/dynamodb-local:latest
     container_name: saleor-dynamodb-local
+    environment:
+      - .env
     ports:
       - "8001:8000"
     volumes:
@@ -58,7 +60,7 @@ services:
     networks:
       - dokploy-network
     restart: unless-stopped
- 
+
 volumes:
   pnpm-store:
     driver: local
