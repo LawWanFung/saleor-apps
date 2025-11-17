@@ -24,9 +24,11 @@ RUN npm install -g pnpm@10.6.3
 # 用 pruner 嘅 output 做 context
 COPY --from=pruner /app/out/pnpm-lock.yaml pnpm-lock.yaml
 COPY --from=pruner /app/out/pnpm-workspace.yaml pnpm-workspace.yaml
-COPY --from=pruner /app/out/package.json package.json
-COPY --from=pruner /app/out/apps ./apps
-COPY --from=pruner /app/out/packages ./packages
+COPY --from=pruner /app/out/full/package.json package.json
+COPY --from=pruner /app/out/full/apps ./apps
+COPY --from=pruner /app/out/full/packages ./packages
+COPY --from=pruner /app/out/full/turbo.json turbo.json 
+ # 如果 lint/build 會用到
 
 # # Copy workspace config
 # COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json ./
@@ -94,6 +96,8 @@ COPY --from=builder /app/apps/stripe/.next/static ./apps/stripe/.next/static
 # 2. 複製 public 檔案 (靜態資源)
 # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 COPY --from=builder /app/apps/stripe/public ./apps/stripe/public 
+
+RUN ls -la
 
 # Set environment
 ENV NODE_ENV=production
