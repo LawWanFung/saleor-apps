@@ -69,26 +69,6 @@ FROM node:22-alpine AS runner
 # 🎯 設定工作目錄到應用程式目錄 (與 build 時相同)
 WORKDIR /app
 
-RUN ls -la
-
-# Set environment
-ENV NODE_ENV=production
-ENV PORT=3001
-ENV HOSTNAME=0.0.0.0
-
-EXPOSE 3001
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3001/', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
-
-# Start the app
-# CMD ["pnpm", "start", "-p", "3001"]
-CMD ["node", "/app/apps/stripe/server.js", "-p", "3001"]
-
-
-
-
 
 # # Set environment for the app
 # ENV NODE_ENV=production
@@ -122,15 +102,34 @@ CMD ["node", "/app/apps/stripe/server.js", "-p", "3001"]
 
 # # 1. 複製 Standalone 模式輸出的所有內容 (包含 server.js 和依賴)
 # # 🎯 關鍵: 複製到 /app/apps/stripe/
-# COPY --from=builder /app/apps/stripe/.next/standalone ./
-# COPY --from=builder /app/apps/stripe/.next/static ./
+COPY --from=builder /app/builder/apps/stripe/.next/standalone ./
+COPY --from=builder /app/builder/apps/stripe/.next/static ./static
 # # 2. 複製 public 檔案 (靜態資源)
 # # 路徑結構：/app/apps/stripe/public -> 容器的 /app/apps/stripe/public
 # # COPY --from=builder public ./apps/stripe/public 
-# COPY --from=builder /app/apps/stripe/public ./public 
+COPY --from=builder /app/builder/apps/stripe/public ./public 
 
 # RUN ls -la ./apps
 # RUN ls -la ./apps/stripe
 # RUN ls -la ./apps/stripe/.next
 
 # RUN find . -type d -name "static"
+
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=3001
+ENV HOSTNAME=0.0.0.0
+
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3001/', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+
+# Start the app
+# CMD ["pnpm", "start", "-p", "3001"]
+CMD ["node", "/app/apps/stripe/server.js", "-p", "3001"]
+
+
+
+
