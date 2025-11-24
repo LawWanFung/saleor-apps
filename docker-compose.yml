@@ -52,7 +52,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "/docker/dynamodb:/home/dynamodblocal/data"
+      - dynamodb-data:/data
     working_dir: /home/dynamodblocal
     user: root # needed to write to volume
     networks:
@@ -61,8 +61,7 @@ services:
 
 volumes:
   pnpm-store:
-    driver: local
-  dynamodb-data:
+  dynamodb-data:            # 關鍵修正 3：加返呢個 volume
     driver: local
 
 networks:
