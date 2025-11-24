@@ -132,7 +132,7 @@ EXPOSE 3001
 # 新加：自動創 DynamoDB table
 # 安裝 AWS CLI v2（輕量，curl + unzip）
 RUN apk add --no-cache curl unzip && \
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
     ./aws/install && \
     rm -rf aws awscliv2.zip && \
@@ -140,10 +140,10 @@ RUN apk add --no-cache curl unzip && \
 
 # COPY init script + chown 畀 node
 COPY --chown=node:node init-dynamodb.sh /app/init-dynamodb.sh
-# RUN chmod +x /app/init-dynamodb.sh
+RUN chmod +x /app/init-dynamodb.sh
 
 # 改 ENTRYPOINT 先跑 script，再 exec 原 CMD
-# ENTRYPOINT ["/app/init-dynamodb.sh"]
+ENTRYPOINT ["/app/init-dynamodb.sh"]
 # ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
 
 # Start the app
