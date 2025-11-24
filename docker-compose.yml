@@ -44,7 +44,7 @@ services:
     restart: unless-stopped
 
   dynamodb-local:
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /data -inMemory"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /data"
     image: amazon/dynamodb-local:latest
     container_name: saleor-dynamodb-local
     environment:
