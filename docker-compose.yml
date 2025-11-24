@@ -33,8 +33,6 @@ services:
       # Observability (Optional)
       SENTRY_DSN: ${SENTRY_DSN:-}
       OTEL_ENABLED: ${OTEL_ENABLED:-false}
-    environment:
-      - .env
     volumes:
       # - "../..:/app"
       - "pnpm-store:/app/.pnpm-store"
