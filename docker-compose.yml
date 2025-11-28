@@ -67,8 +67,8 @@ services:
       - AWS_DEFAULT_REGION=us-east-1
     command: >
       sh -c "
-        aws dynamodb create-table --endpoint-url http://dynamodb-local:8000 --table-name saleor-app-config --attribute-definitions AttributeName=PK,AttributeType=S AttributeName=SK,AttributeType=S --key-schema AttributeName=PK,KeyType=HASH AttributeName=SK,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5;
-        aws dynamodb put-item --endpoint-url http://dynamodb-local:8000 --table-name saleor-app-config --item '{\"PK\":{\"S\":\"RootConfig\"}, \"SK\":{\"S\":\"\"}, \"value\":{\"M\":{}}}' 
+        aws dynamodb create-table --endpoint-url http://dynamodb-local:8000 --table-name stripe-main-table --attribute-definitions AttributeName=PK,AttributeType=S AttributeName=SK,AttributeType=S --key-schema AttributeName=PK,KeyType=HASH AttributeName=SK,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5;
+        aws dynamodb put-item --endpoint-url http://dynamodb-local:8000 --table-name stripe-main-table --item '{\"PK\":{\"S\":\"RootConfig\"}, \"SK\":{\"S\":\"\"}, \"value\":{\"M\":{}}}' 
       "
     networks:
       - dokploy-network
