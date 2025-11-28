@@ -30,7 +30,7 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-DUMMY_ACCESS_KEY}
 
       # SECRET KEY DEBUG
-      SECRET_KEY: R+AdKeGr1cMNtbWUvogaDW96lkoVfqcc
+      SECRET_KEY: 1234567890123456789012
       
       # Observability (Optional)
       SENTRY_DSN: ${SENTRY_DSN:-}
