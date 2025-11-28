@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: apps/stripe/Dockerfile
-    container_name: saleor-stripe-app
     ports:
       - "3001:3001"
     environment:
@@ -46,7 +45,6 @@ services:
   dynamodb-local:
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /data"
     image: amazon/dynamodb-local:latest
-    container_name: saleor-dynamodb-local
     environment:
       - .env
     ports:
