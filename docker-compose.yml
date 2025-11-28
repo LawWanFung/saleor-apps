@@ -28,6 +28,9 @@ services:
       AWS_REGION: ${AWS_REGION:-us-east-1}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-DUMMY_ACCESS_KEY}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-DUMMY_ACCESS_KEY}
+
+      # SECRET KEY DEBUG
+      SECRET_KEY: R+AdKeGr1cMNtbWUvogaDW96lkoVfqcc
       
       # Observability (Optional)
       SENTRY_DSN: ${SENTRY_DSN:-}
