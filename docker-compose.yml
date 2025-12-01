@@ -17,7 +17,7 @@ services:
       # Stripe Configuration
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
       STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      # STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
       
       # App Configuration
       SALEOR_APP_ID: ${SALEOR_APP_ID}
@@ -30,7 +30,7 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
 
       # SECRET KEY DEBUG
-      SECRET_KEY: oL/T+Xje1el0KipymTJ2iCqvcTaPmy0h
+      # SECRET_KEY: oL/T+Xje1el0KipymTJ2iCqvcTaPmy0h
       
       # Observability (Optional)
       SENTRY_DSN: ${SENTRY_DSN:-}
