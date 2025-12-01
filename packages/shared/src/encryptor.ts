@@ -12,6 +12,11 @@ export class Encryptor implements IEncryptor {
   private secret: string;
 
   constructor(secret: string) {
+    // DEBUG: log the raw key and its byte length
+    console.log("[Encryptor] raw secret:", secret);
+    console.log("[Encryptor] raw secret length (chars):", secret.length);
+    console.log("[Encryptor] raw secret length (bytes):", Buffer.from(secret, "hex").length);
+
     this.secret = secret;
   }
 
