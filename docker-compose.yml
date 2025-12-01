@@ -26,8 +26,8 @@ services:
       # DynamoDB Configuration (local)
       AWS_ENDPOINT_URL_DYNAMODB: http://dynamodb-local:8000
       AWS_REGION: ${AWS_REGION:-us-east-1}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-dummy}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-dummy}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
 
       # SECRET KEY DEBUG
       SECRET_KEY: oL/T+Xje1el0KipymTJ2iCqvcTaPmy0h
@@ -65,9 +65,9 @@ services:
     depends_on:
       - dynamodb-local
     environment:
-      - AWS_ACCESS_KEY_ID=dummy
-      - AWS_SECRET_ACCESS_KEY=dummy
-      - AWS_DEFAULT_REGION=us-east-1
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: us-east-1
     command: " dynamodb create-table --endpoint-url http://dynamodb-local:8000 --table-name saleor-app-config --attribute-definitions AttributeName=PK,AttributeType=S AttributeName=SK,AttributeType=S --key-schema AttributeName=PK,KeyType=HASH AttributeName=SK,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 || true; dynamodb put-item --endpoint-url http://dynamodb-local:8000 --table-name saleor-app-config --item '{\"PK\":{\"S\":\"RootConfig\"}, \"SK\":{\"S\":\"\"}, \"value\":{\"M\":{}}}'"
     networks:
       - dokploy-network
