@@ -37,8 +37,8 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 # # Copy stripe app
 # COPY apps/stripe ./apps/stripe
 
-# COPY .env.docker .env
-# COPY .env.docker ./apps/stripe/.env
+COPY .env.docker .env
+COPY .env.docker ./apps/stripe/.env
 # COPY .husky ./.husky
 
 ENV PNPM_SHARED_WORKSPACE_LOCKFILE=true
