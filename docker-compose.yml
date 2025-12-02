@@ -10,7 +10,7 @@ services:
     secrets:
       - secret-file
     environment:
-      SECRET_FILE: /secret
+      SECRET_FILE: secret-file
     
       # Node environment
       NODE_ENV: ${NODE_ENV:-production}
@@ -82,7 +82,7 @@ volumes:
     driver: local
 secrets:
   secret-file:
-    file: /secret
+    file: secret
     
 networks:
   dokploy-network:
