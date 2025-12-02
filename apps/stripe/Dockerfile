@@ -72,9 +72,9 @@ RUN --mount=type=secret,id=secret-key,env=SECRET_KEY \
     # --mount=type=secret,id=app-token,env=SALEOR_APP_TOKEN \ 
     # --mount=type=secret,id=dynamo-endpoint,env=DYNAMODB_ENDPOINT \ 
     # --mount=type=secret,id=aws-endpoint-dynamo,env=AWS_ENDPOINT_URL_DYNAMODB \ 
-    # --mount=type=secret,id=aws-access-key,env=AWS_ACCESS_KEY_ID \ 
+    --mount=type=secret,id=aws-access-key,env=AWS_ACCESS_KEY_ID \ 
     # --mount=type=secret,id=aws-secret-key,env=AWS_SECRET_ACCESS_KEY \ 
-    # --mount=type=secret,id=aws-region,env=AWS_REGION \ 
+    --mount=type=secret,id=aws-region,env=AWS_REGION \ 
     --mount=type=secret,id=dynamo-table-name,env=DYNAMODB_MAIN_TABLE_NAME \
     pnpm --filter saleor-app-payment-stripe... run build 
 # Check what's in the path
