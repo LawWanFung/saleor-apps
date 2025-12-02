@@ -53,7 +53,7 @@ RUN --mount=type=secret,id=secret-key,env=SECRET_KEY \
     --mount=type=secret,id=aws-access-key,env=AWS_ACCESS_KEY_ID \ 
     --mount=type=secret,id=aws-secret-key,env=AWS_SECRET_ACCESS_KEY \ 
     --mount=type=secret,id=aws-region,env=AWS_REGION \ 
-    --mount=type=secret,id=dynamo-table-name,env=DYNAMODB_MAIN_TABLE_NAME \ 
+    --mount=type=secret,id=dynamo-table-name,env=DYNAMODB_MAIN_TABLE_NAME 
 
 
 ENV PNPM_SHARED_WORKSPACE_LOCKFILE=true
