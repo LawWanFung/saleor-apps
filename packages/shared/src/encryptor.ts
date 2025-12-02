@@ -12,13 +12,13 @@ export class Encryptor implements IEncryptor {
   private secret: string;
 
   constructor(secret: string) {
-    // DEBUG: log the raw key and its byte length
-    // eslint-disable-next-line no-console
-    console.log("[Encryptor] raw secret:", secret);
-    // eslint-disable-next-line no-console
-    console.log("[Encryptor] raw secret length (chars):", secret.length);
-    // eslint-disable-next-line no-console
-    console.log("[Encryptor] raw secret length (bytes):", Buffer.from(secret, "hex").length);
+    // // DEBUG: log the raw key and its byte length
+    // // eslint-disable-next-line no-console
+    // console.log("[Encryptor] raw secret:", secret);
+    // // eslint-disable-next-line no-console
+    // console.log("[Encryptor] raw secret length (chars):", secret.length);
+    // // eslint-disable-next-line no-console
+    // console.log("[Encryptor] raw secret length (bytes):", Buffer.from(secret, "hex").length);
 
     this.secret = secret;
   }
