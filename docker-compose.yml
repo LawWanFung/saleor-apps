@@ -5,13 +5,11 @@ services:
     build:
       context: .
       dockerfile: apps/stripe/Dockerfile
+      secrets:
+        - "SECRET_KEY"
+        - "DYNAMODB_MAIN_TABLE_NAME"
     ports:
       - "3001:3001"
-    secrets:
-      SECRET_KEY:
-        environment: ${SECRET_KEY}
-      DYNAMODB_MAIN_TABLE_NAME:
-        environment: ${DYNAMODB_MAIN_TABLE_NAME}
         
     environment:
       # SECRET_FILE: secret-file
@@ -84,9 +82,12 @@ volumes:
   pnpm-store:
   dynamodb-data:            # 關鍵修正 3：加返呢個 volume
     driver: local
-# secrets:
-#   secret-file:
-#     file: /secret
+    
+secrets:
+  SECRET_KEY:
+    environment: "SECRET_KEY"
+  DYNAMODB_MAIN_TABLE_NAME:
+    environment: "DYNAMODB_MAIN_TABLE_NAME"
     
 networks:
   dokploy-network:
