@@ -37,9 +37,10 @@ services:
       AWS_REGION: ${AWS_REGION:-us-east-1}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      DYNAMODB_MAIN_TABLE_NAME: ${DYNAMODB_MAIN_TABLE_NAME}
 
       # SECRET KEY DEBUG
-      # SECRET_KEY: oL/T+Xje1el0KipymTJ2iCqvcTaPmy0h
+      SECRET_KEY: ${SECRET_KEY}
       
       # Observability (Optional)
       SENTRY_DSN: ${SENTRY_DSN:-}
