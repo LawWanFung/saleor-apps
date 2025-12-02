@@ -8,6 +8,8 @@ services:
       secrets:
         - "SECRET_KEY"
         - "DYNAMODB_MAIN_TABLE_NAME"
+        - "AWS_REGION"
+        - "AWS_ACCESS_KEY_ID"
     ports:
       - "3001:3001"
         
@@ -85,9 +87,13 @@ volumes:
     
 secrets:
   SECRET_KEY:
-    environment: "SECRET_KEY"
+    environment: ${SECRET_KEY}
   DYNAMODB_MAIN_TABLE_NAME:
-    environment: "DYNAMODB_MAIN_TABLE_NAME"
+    environment: ${DYNAMODB_MAIN_TABLE_NAME}
+  AWS_REGION:
+    environment: ${AWS_REGION}
+  AWS_ACCESS_KEY_ID:
+    environment: ${AWS_ACCESS_KEY_ID}
     
 networks:
   dokploy-network:
