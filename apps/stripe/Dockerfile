@@ -13,34 +13,6 @@ RUN pnpm dlx turbo@2.6.1 prune saleor-app-payment-stripe --docker --out-dir out
 # 1. Build stage
 FROM node:22-alpine AS builder
 
-
-ARG ENV_SECRET_KEY
-ARG ENV_API_URL
-ARG ENV_STRIPE_SECRET
-ARG ENV_STRIPE_PUBLIC
-ARG ENV_APP_ID
-ARG ENV_APP_TOKEN
-ARG ENV_DYNAMO_ENDPOINT
-ARG ENV_AWS_ACCESS_KEY
-ARG ENV_AWS_SECRET
-ARG ENV_AWS_REGION
-ARG ENV_DYNAMO_TABLE_NAME
-
-ENV SECRET_KEY=$ENV_SECRET_KEY
-ENV NEXT_PUBLIC_SALEOR_API_URL=$ENV_API_URL
-ENV STRIPE_SECRET_KEY=$ENV_STRIPE_SECRET
-ENV STRIPE_PUBLIC_KEY=$ENV_STRIPE_PUBLIC
-ENV SALEOR_APP_ID=$ENV_APP_ID
-ENV SALEOR_APP_TOKEN=$ENV_APP_TOKEN
-ENV DYNAMODB_ENDPOINT=$ENV_DYNAMO_ENDPOINT
-ENV AWS_ENDPOINT_URL_DYNAMODB=$ENV_DYNAMO_ENDPOINT
-ENV AWS_ACCESS_KEY_ID=$ENV_AWS_ACCESS_KEY
-ENV AWS_SECRET_ACCESS_KEY=$ENV_AWS_SECRET
-ENV AWS_REGION=$ENV_AWS_REGION
-ENV DYNAMODB_MAIN_TABLE_NAME=$ENV_DYNAMO_TABLE_NAME
-
-
-
 WORKDIR /app/builder
 
 # Install pnpm
@@ -68,6 +40,21 @@ COPY --from=pruner /app/out/full/turbo.json turbo.json
 # COPY .env.docker .env
 # COPY .env.docker ./apps/stripe/.env
 # COPY .husky ./.husky
+
+
+RUN --mount=type=secret,id=secret-key,env=SECRET_KEY \
+    --mount=type=secret,id=api-url,env=NEXT_PUBLIC_SALEOR_API_URL \
+    --mount=type=secret,id=stripe-secret-key,env=STRIPE_SECRET_KEY \ 
+    --mount=type=secret,id=stripe-public-key,env=STRIPE_PUBLIC_KEY \ 
+    --mount=type=secret,id=app-id,env=SALEOR_APP_ID \ 
+    --mount=type=secret,id=app-token,env=SALEOR_APP_TOKEN \ 
+    --mount=type=secret,id=dynamo-endpoint,env=DYNAMODB_ENDPOINT \ 
+    --mount=type=secret,id=aws-endpoint-dynamo,env=AWS_ENDPOINT_URL_DYNAMODB \ 
+    --mount=type=secret,id=aws-access-key,env=AWS_ACCESS_KEY_ID \ 
+    --mount=type=secret,id=aws-secret-key,env=AWS_SECRET_ACCESS_KEY \ 
+    --mount=type=secret,id=aws-region,env=AWS_REGION \ 
+    --mount=type=secret,id=dynamo-table-name,env=DYNAMODB_MAIN_TABLE_NAME \ 
+
 
 ENV PNPM_SHARED_WORKSPACE_LOCKFILE=true
 RUN pnpm fetch --filter saleor-app-payment-stripe... --filter @saleor/* 
