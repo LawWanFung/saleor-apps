@@ -65,16 +65,16 @@ RUN pnpm --filter saleor-app-payment-stripe... generate
 # RUN ls -la
 # RUN pnpm install
 RUN --mount=type=secret,id=secret-key,env=SECRET_KEY \
-    --mount=type=secret,id=api-url,env=NEXT_PUBLIC_SALEOR_API_URL \
-    --mount=type=secret,id=stripe-secret-key,env=STRIPE_SECRET_KEY \ 
-    --mount=type=secret,id=stripe-public-key,env=STRIPE_PUBLIC_KEY \ 
-    --mount=type=secret,id=app-id,env=SALEOR_APP_ID \ 
-    --mount=type=secret,id=app-token,env=SALEOR_APP_TOKEN \ 
-    --mount=type=secret,id=dynamo-endpoint,env=DYNAMODB_ENDPOINT \ 
-    --mount=type=secret,id=aws-endpoint-dynamo,env=AWS_ENDPOINT_URL_DYNAMODB \ 
-    --mount=type=secret,id=aws-access-key,env=AWS_ACCESS_KEY_ID \ 
-    --mount=type=secret,id=aws-secret-key,env=AWS_SECRET_ACCESS_KEY \ 
-    --mount=type=secret,id=aws-region,env=AWS_REGION \ 
+    # --mount=type=secret,id=api-url,env=NEXT_PUBLIC_SALEOR_API_URL \
+    # --mount=type=secret,id=stripe-secret-key,env=STRIPE_SECRET_KEY \ 
+    # --mount=type=secret,id=stripe-public-key,env=STRIPE_PUBLIC_KEY \ 
+    # --mount=type=secret,id=app-id,env=SALEOR_APP_ID \ 
+    # --mount=type=secret,id=app-token,env=SALEOR_APP_TOKEN \ 
+    # --mount=type=secret,id=dynamo-endpoint,env=DYNAMODB_ENDPOINT \ 
+    # --mount=type=secret,id=aws-endpoint-dynamo,env=AWS_ENDPOINT_URL_DYNAMODB \ 
+    # --mount=type=secret,id=aws-access-key,env=AWS_ACCESS_KEY_ID \ 
+    # --mount=type=secret,id=aws-secret-key,env=AWS_SECRET_ACCESS_KEY \ 
+    # --mount=type=secret,id=aws-region,env=AWS_REGION \ 
     --mount=type=secret,id=dynamo-table-name,env=DYNAMODB_MAIN_TABLE_NAME \
     pnpm --filter saleor-app-payment-stripe... run build 
 # Check what's in the path
