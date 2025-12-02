@@ -82,7 +82,7 @@ volumes:
     driver: local
 secrets:
   secret-file:
-    file: secret
+    file: /secret
     
 networks:
   dokploy-network:
