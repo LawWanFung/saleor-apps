@@ -7,8 +7,8 @@ services:
       dockerfile: apps/stripe/Dockerfile
     ports:
       - "3001:3001"
-    secrets:
-      - secret-file
+    # secrets:
+    #   - secret-file
     environment:
       # SECRET_FILE: secret-file
     
@@ -80,9 +80,9 @@ volumes:
   pnpm-store:
   dynamodb-data:            # 關鍵修正 3：加返呢個 volume
     driver: local
-secrets:
-  secret-file:
-    file: /secret
+# secrets:
+#   secret-file:
+#     file: /secret
     
 networks:
   dokploy-network:
